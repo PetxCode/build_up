@@ -2,15 +2,43 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "./AuthProvider";
+import { BsCart3 } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const { saveUser } = useContext(AuthContext);
+  const myCart = useSelector((state) => state.reducer.cart);
 
   return (
     <div>
       <Container>
         <Wrapper>
-          <Logo to="/">Logo</Logo>
+          <Navigation>
+            <Logo to="/">Logo</Logo>
+
+            <Button to="/store">Store</Button>
+            <Button to="/query">Query</Button>
+            <Button to="/payment">Payment</Button>
+
+            <Button
+              to="/cart"
+              style={{
+                backgroundColor: "transparent",
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <BsCart3
+                style={{
+                  marginRight: "10px",
+                  fontSize: "40px",
+                  fontWeight: "bold",
+                }}
+              />{" "}
+              Cart: {myCart.length}
+            </Button>
+          </Navigation>
 
           <Navigation>
             {saveUser ? (
