@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { AuthContext } from "./AuthProvider";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const HomeScreen = () => {
   const { saveUser } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const HomeScreen = () => {
 
     setAllUsers(res.data.data);
 
-    console.log(res.data.data);
+    // console.log(res.data.data);
   };
 
   const deleteUser = async (id) => {
@@ -28,8 +29,13 @@ const HomeScreen = () => {
     await axios.delete(`http://localhost:3456/user/${id}`, config);
   };
 
+  const { data } = useQuery("users", () => {
+    return axios.get("http://localhost:3456/users");
+  });
+
   useEffect(() => {
     fetchData();
+    console.log("data", data?.data?.data);
   }, []);
 
   return (

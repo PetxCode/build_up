@@ -6,26 +6,43 @@ import SignIn from "./comp/SignIn";
 import HomeScreen from "./comp/HomeScreen";
 import Private from "./comp/Private";
 import DetailScreen from "./comp/Detailed";
+import StoreScreen from "./eCommerce/StoreScreen";
+import { QueryClientProvider, QueryClient } from "react-query";
+import Query from "./comp/Query";
+import PaymentScreen from "./comp/Payment";
+import CartScreen from "./comp/CartScreen";
+import CheckOut from "./comp/CheckOut";
+import Success from "./comp/SuccessScreen";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/register" element={<Registeration />} />
-          <Route path="/sign" element={<SignIn />} />
-          <Route path="/user/:id" element={<DetailScreen />} />
-          <Route
-            path="/"
-            element={
-              <Private>
-                <HomeScreen />
-              </Private>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/register" element={<Registeration />} />
+            <Route path="/sign" element={<SignIn />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/user/:id" element={<DetailScreen />} />
+            <Route path="/store" element={<StoreScreen />} />
+            <Route path="/query" element={<Query />} />
+            <Route path="/payment" element={<PaymentScreen />} />
+            <Route path="/cart" element={<CartScreen />} />
+            <Route
+              path="/"
+              element={
+                <Private>
+                  <HomeScreen />
+                </Private>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </div>
   );
 };
